@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Mon site – Docker + Nginx</title>
+  <style>
+    :root {
+      --bg: #f5f7fa;
+      --surface: #ffffff;
+      --text: #14202e;
+      --muted: #5b6b7c;
+      --accent: #0a6cff;
+      --border: #d9e0e8;
+    }
+    @media (prefers-color-scheme: dark) {
+      :root {
+        --bg: #0f1722;
+        --surface: #172231;
+        --text: #e7edf4;
+        --muted: #9aa9b9;
+        --accent: #5aa2ff;
+        --border: #27364a;
+      }
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      min-height: 100vh;
+      display: grid;
+      place-items: center;
+      padding: 1.5rem;
+      background: var(--bg);
+      color: var(--text);
+      font-family: "Segoe UI", system-ui, -apple-system, sans-serif;
+      line-height: 1.6;
+    }
+    main {
+      width: 100%;
+      max-width: 36rem;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 2rem;
+    }
+    h1 { margin: 0 0 .5rem; font-size: 1.75rem; line-height: 1.25; }
+    p { margin: 0 0 1.25rem; color: var(--muted); }
+    pre {
+      margin: 0 0 1.5rem;
+      padding: 1rem;
+      overflow-x: auto;
+      background: var(--bg);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      font: .9rem/1.5 Consolas, "Courier New", monospace;
+      color: var(--text);
+    }
+    button {
+      font: inherit;
+      padding: .6rem 1.1rem;
+      color: #fff;
+      background: var(--accent);
+      border: 0;
+      border-radius: 8px;
+      cursor: pointer;
+    }
+    button:focus-visible { outline: 3px solid var(--text); outline-offset: 2px; }
+    #heure { margin-left: .75rem; color: var(--muted); }
+  </style>
+</head>
+<body>
+  <main>
+    <h1>Ton conteneur Nginx fonctionne</h1>
+    <p>Cette page est servie depuis le dossier <code>/usr/share/nginx/html</code> de l’image Docker. Modifie ce fichier, reconstruis l’image, et le changement apparaît ici.</p>
+    <pre>docker build -t mon-site .
+docker run -d -p 8080:80 mon-site</pre>
+    <button id="btn" type="button">Afficher l’heure</button>
+    <span id="heure" aria-live="polite"></span>
+  </main>
+
+  <script>
+    document.getElementById("btn").addEventListener("click", function () {
+      document.getElementById("heure").textContent =
+        new Date().toLocaleTimeString("fr-FR");
+    });
+  </script>
+</body>
+</html>
